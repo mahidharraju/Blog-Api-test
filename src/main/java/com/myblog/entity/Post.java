@@ -1,4 +1,4 @@
-package com.myblog.models;
+package com.myblog.entity;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -31,8 +31,10 @@ public class Post {
     private  String title;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="authorId")
+    @JoinColumn(name="author")
     private Author author;
+    
+    
     private String image;
     private LocalDateTime postedOn;
     private LocalDateTime lastUpdated;
@@ -46,9 +48,8 @@ public class Post {
 		super();
 	}
 
-	public Post(String title, Author author, String image, LocalDateTime postedOn, LocalDateTime lastUpdated, BigInteger likesCount, BigInteger disLikesCount, String content) {
+	public Post(String title, String image, LocalDateTime postedOn, LocalDateTime lastUpdated, BigInteger likesCount, BigInteger disLikesCount, String content) {
         this.title = title;
-        this.author = author;
         this.image = image;
         this.postedOn = postedOn;
         this.lastUpdated = lastUpdated;
@@ -79,6 +80,7 @@ public class Post {
 
     public void setAuthor(Author author) {
         this.author = author;
+        author.getPosts().add(this);
     }
 
     public String getImage() {

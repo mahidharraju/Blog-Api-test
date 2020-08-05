@@ -17,7 +17,7 @@ public class ControllerResponse {
 
 
     public static <T> ResponseEntity<T> getServerErrorResponseEntity() {
-        return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity("InValid request Format", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public static ResponseEntity<Object> getNotFoundResponseEntity() {

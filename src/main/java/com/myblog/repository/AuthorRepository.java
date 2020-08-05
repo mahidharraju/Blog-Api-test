@@ -1,12 +1,13 @@
-package com.myblog.repositories;
-
-import com.myblog.models.Post;
+package com.myblog.repository;
 
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.myblog.entity.Author;
+
 @Repository
-public interface PostRepository extends JpaRepository<Post,UUID> {
+public interface AuthorRepository extends JpaRepository<Author, UUID> {
+
 }

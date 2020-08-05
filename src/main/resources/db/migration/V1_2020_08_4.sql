@@ -1,3 +1,8 @@
+--sudo -u postgres psql
+--create database blogdb;
+--create user blogdb  with encrypted password 'blogdb';
+--grant all privileges on database blogdb to blogdb;
+
 CREATE TABLE Post (
     post_id uuid NOT NULL,
     title character varying(500) NOT NULL,
@@ -25,6 +30,8 @@ ALTER TABLE ONLY Author
     
 ALTER TABLE ONLY Post
     ADD CONSTRAINT "FK_author_authorId" FOREIGN KEY (author) REFERENCES Author(author_id) NOT VALID;
+
+CREATE INDEX "fki_FK_author_authorId" ON Post USING btree (author);
 
 
     
