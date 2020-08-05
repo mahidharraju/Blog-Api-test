@@ -1,6 +1,6 @@
-package com.myblog.models;
+package com.myblog.entity;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -15,10 +15,16 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
+
 @Entity
 @Table(name="Author")
 public class Author {
 	
+	
+	 private static final long serialVersionUID = -2343243243242432342L;	
 	
 	@Id
 	@GeneratedValue(generator = "uuid")
@@ -29,6 +35,7 @@ public class Author {
 	private String authorBio;
 	private String image;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "author" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)	
 	private Set<Post> posts;
 	
@@ -36,13 +43,28 @@ public class Author {
 	
 	public Author() {
 		super();
+		posts= new HashSet<Post>();
 	}
+	
+	
+	public Author(UUID authorId) {
+		super();
+		this.authorId = authorId;
+		posts= new HashSet<Post>();
+	}
+
+
 	public Author(String authorName, String authorBio, String image) {
 		super();
 		this.authorName = authorName;
 		this.authorBio = authorBio;
 		this.image = image;
+		posts= new HashSet<Post>();
 	}
+	
+	
+	
+	
 	public UUID getAuthorId() {
 		return authorId;
 	}
@@ -72,6 +94,9 @@ public class Author {
 	}
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
+		 for (Post post : posts) {
+	            post.setAuthor(this);
+	        }
 	}
 	
 	
